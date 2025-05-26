@@ -1,7 +1,9 @@
 # langchain-chatbot
 Simple chatbot using langchain
 
-Followed the tutorial from here: https://python.langchain.com/docs/tutorials/llm_chain/
+Followed the tutorials from here:
+* https://python.langchain.com/docs/tutorials/llm_chain/
+* https://python.langchain.com/docs/tutorials/rag/
 
 Add your OpenAI and LangSmith API keys to the .env file.
 

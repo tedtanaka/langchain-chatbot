@@ -1,3 +1,7 @@
 langchain
 dotenv
 langchain[openai]
+langchain-core
+langchain-community
+bs4
+langgraph
