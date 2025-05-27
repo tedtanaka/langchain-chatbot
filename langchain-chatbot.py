@@ -43,11 +43,16 @@ embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
 vector_store = InMemoryVectorStore(embeddings)
 
 # Load and chunk contents of the blog
+urls = {
+    agent: "https://lilianweng.github.io/posts/2023-06-23-agent/",
+    mothman: "https://www.wboy.com/only-on-wboy-com/paranormal-w-va/the-legend-of-mothman-paranormal-w-va/",
+    asus: "https://www.asus.com/microsite/motherboard/asus-motherboards-win11-ready",
+    carroll: "https://www.poetryfoundation.org/poems/42916/jabberwocky/",
+}
+
 print("Load contents of an Internet blog")
 loader = WebBaseLoader(
-    #web_paths=("https://lilianweng.github.io/posts/2023-06-23-agent/",),
-    #web_paths=("https://www.wboy.com/only-on-wboy-com/paranormal-w-va/the-legend-of-mothman-paranormal-w-va/",),
-    web_paths=("https://www.asus.com/microsite/motherboard/asus-motherboards-win11-ready/",),
+    web_paths=(urls.asus,),
     bs_kwargs=dict(
         parse_only=bs4.SoupStrainer(
             class_=("post-content", "post-title", "post-header")
