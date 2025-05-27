@@ -43,10 +43,29 @@ embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
 vector_store = InMemoryVectorStore(embeddings)
 
 # Load and chunk contents of the blog
+rag_info = {
+    "agent": {
+        "url":"https://lilianweng.github.io/posts/2023-06-23-agent/",
+        "question": "What is Task Decomposition?",
+    },
+    "mothman": {
+        "url": "https://www.wboy.com/only-on-wboy-com/paranormal-w-va/the-legend-of-mothman-paranormal-w-va/",
+        "question": "Who first saw the Mothman?",
+    },
+    "asus": {
+        "url": "https://www.asus.com/microsite/motherboard/asus-motherboards-win11-ready",
+        "question" : "Can a Windows PC with an ASUS M51AC motherboard be upgraded to Windows 11?",
+    },
+    "carroll": {
+        "url": "https://www.poetryfoundation.org/poems/42916/jabberwocky/",
+        "question" : "Who did gyre and gimble in the wabe?",
+    },
+}
+rag_topic = "carroll"
+
 print("Load contents of an Internet blog")
 loader = WebBaseLoader(
-    web_paths=("https://lilianweng.github.io/posts/2023-06-23-agent/",),
-    #web_paths=("https://www.wboy.com/only-on-wboy-com/paranormal-w-va/the-legend-of-mothman-paranormal-w-va/",),
+    web_paths=(rag_info[rag_topic]["url"],),
     bs_kwargs=dict(
         parse_only=bs4.SoupStrainer(
             class_=("post-content", "post-title", "post-header")
@@ -89,13 +108,10 @@ graph_builder = StateGraph(State).add_sequence([retrieve, generate])
 graph_builder.add_edge(START, "retrieve")
 graph = graph_builder.compile()
 
+
 print("Ask LLM a question about the blog contents")
-#print("Question: What is Task Decomposition?")
-print("\nQuestion: Who first saw the Mothman?")
+print("\nQuestion: " + rag_info[rag_topic]["question"])
 print("\nAnswer:")
 
-#response = graph.invoke({"question": "What is Task Decomposition?"})
-response = graph.invoke({"question": "Who first saw the Mothman?"})
+response = graph.invoke({"question": rag_info[rag_topic]["question"]})
 print(response["answer"])
-
-
