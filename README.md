@@ -1,5 +1,5 @@
 # langchain-chatbot
-Simple chatbot using langchain
+Simple chatbot using langchain. This code loads an article from the web and allows a query on the contents.
 
 Followed the tutorials from here:
 * https://python.langchain.com/docs/tutorials/llm_chain/
